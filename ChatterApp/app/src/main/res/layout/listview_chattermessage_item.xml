@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00BCD4"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/chattermessage_listitem_loginname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="login name" />
+
+    <TextView
+        android:id="@+id/chattermessage_listitem_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="message"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/chattermessage_listitem_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="date"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

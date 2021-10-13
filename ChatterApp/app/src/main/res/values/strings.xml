@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ChatterApp</string>
+    <string name="send_message">Send Message</string>
+    <string name="enter_a_message_to_send">enter a message to send</string>
+    <string name="submit">Submit</string>
+    <string name="message_validation_error">Please enter a message</string>
+
+    <string name="view_messages">View Messages</string>
+    <string name="Chatters">Chatters</string>
+    <string name="home">Home</string>
+
+</resources>
