@@ -1,8 +1,13 @@
 package ca.nait.dmit.dmit2504;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void rebindRecyclerView() {
-        CategoryDbHelper dbHelper = new CategoryDbHelper(this);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         List<Category> categories = dbHelper.getCategoriesList();
         CategoryRecyclerViewAdapter recyclerViewAdapter = new CategoryRecyclerViewAdapter(this,categories);
         binding.activityMainCategoriesRecyclerview.setAdapter(recyclerViewAdapter);
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Category newCategory = new Category();
             newCategory.setCategoryName(categoryName);
-            CategoryDbHelper dbHelper = new CategoryDbHelper(this);
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
             long categoryId = dbHelper.addCategory(newCategory);
             String message = String.format("Save successful with id %s", categoryId);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -51,5 +56,55 @@ public class MainActivity extends AppCompatActivity {
             rebindRecyclerView();
         }
 
+    }
+
+    public static final String INTENT_ACTION_CATEGORY_DELETE = "ca.nait.dmit.dmit2504.CATEGORY_DELETE";
+    public static final String EXTRA_CATEGORY_CATEGORYID = "ca.nait.dmit.dmit2504.CATEGORY_ID";
+
+    class DeleteCategoryBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            if (intent.getAction().equals(INTENT_ACTION_CATEGORY_DELETE)) {
+                int categoryId = intent.getIntExtra(EXTRA_CATEGORY_CATEGORYID, 0);
+                if (categoryId > 0) {
+
+                    // Create a delete confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Delete Confirmation")
+                            .setMessage("Are you sure want to delete item " + categoryId + "?")
+                            .setPositiveButton("Yes I am sure", (dialogInterface, i) -> {
+                                DatabaseHelper dbHelper = new DatabaseHelper(context);
+                                dbHelper.deleteCategory(categoryId);
+                                rebindRecyclerView();
+                                Toast.makeText(context,"Delete was successful", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("No", (dialogInterface, i) -> {
+                                Toast.makeText(context,"Delete cancelled", Toast.LENGTH_SHORT).show();
+                            })
+                            ;
+                    builder.show();
+
+                }
+            }
+        }
+    }
+
+    private DeleteCategoryBroadcastReceiver currentDeleteCategoryBroadcastReceiver = new DeleteCategoryBroadcastReceiver();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        IntentFilter categoryDeleteIntentFilter = new IntentFilter();
+        categoryDeleteIntentFilter.addAction(INTENT_ACTION_CATEGORY_DELETE);
+        registerReceiver(currentDeleteCategoryBroadcastReceiver, categoryDeleteIntentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(currentDeleteCategoryBroadcastReceiver);
     }
 }

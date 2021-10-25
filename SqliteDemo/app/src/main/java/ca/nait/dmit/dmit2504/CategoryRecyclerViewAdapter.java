@@ -1,10 +1,13 @@
 package ca.nait.dmit.dmit2504;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,16 +57,31 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     }
 
     // Step 1: Create a ViewHolder class that define the views for a single item
-    public static class CategoryViewHolder extends ViewHolder {
+    public class CategoryViewHolder extends ViewHolder {
 
         public TextView categoryIdTextView;
         public TextView categoryNameTextView;
+        public ImageButton deleteButton;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             categoryIdTextView = itemView.findViewById(R.id.list_item_category_id_textview);
             categoryNameTextView = itemView.findViewById(R.id.list_item_category_categoyrname_textview);
+            deleteButton = itemView.findViewById(R.id.list_item_category_delete_button);
+
+            deleteButton.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+//                Toast.makeText(itemView.getContext(),"Delete catgeory at index " + position, Toast.LENGTH_SHORT).show();
+
+                Category currentCategory = categories.get(position);
+                Intent deleteCategoryIntent = new Intent();
+                deleteCategoryIntent.setAction(MainActivity.INTENT_ACTION_CATEGORY_DELETE);
+                deleteCategoryIntent.putExtra(MainActivity.EXTRA_CATEGORY_CATEGORYID, currentCategory.getCategoryId());
+                itemView.getContext().sendBroadcast(deleteCategoryIntent);
+
+            });
+
         }
     }
 }
