@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static final String INTENT_ACTION_CATEGORY_DELETE = "ca.nait.dmit.dmit2504.CATEGORY_DELETE";
+    public static final String INTENT_ACTION_CATEGORY_EDIT = "ca.nait.dmit.dmit2504.CATEGORY_EDIT";
     public static final String EXTRA_CATEGORY_CATEGORYID = "ca.nait.dmit.dmit2504.CATEGORY_ID";
 
     class DeleteCategoryBroadcastReceiver extends BroadcastReceiver {
@@ -90,21 +91,58 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Broadcast Receiver Step 1: Define a BroadcastReceiver class
+    class EditCategoryBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            if (intent.getAction().equals(INTENT_ACTION_CATEGORY_EDIT)) {
+                int categoryId = intent.getIntExtra(EXTRA_CATEGORY_CATEGORYID, 0);
+                if (categoryId > 0) {
+
+                    //Toast.makeText(context, "Edit category received", Toast.LENGTH_SHORT).show();
+                    DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
+                    Category editCategory = dbHelper.findOneCategoryById(categoryId);
+                    DialogCategoryEdit editDialog = new DialogCategoryEdit(editCategory, MainActivity.this);
+                    editDialog.show(getSupportFragmentManager(), "MainActivity");
+                }
+            }
+        }
+    }
+
+    // Broadcast Receiver Step 2: Create an instance of the custom BroadCastReceiver class
     private DeleteCategoryBroadcastReceiver currentDeleteCategoryBroadcastReceiver = new DeleteCategoryBroadcastReceiver();
+    private EditCategoryBroadcastReceiver currentEditCategoryBroadcastReceiver = new EditCategoryBroadcastReceiver();
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        // Broadcast Receiver Step 3a: Create an IntentFilter with the action and register the broadcast receiver
         IntentFilter categoryDeleteIntentFilter = new IntentFilter();
         categoryDeleteIntentFilter.addAction(INTENT_ACTION_CATEGORY_DELETE);
         registerReceiver(currentDeleteCategoryBroadcastReceiver, categoryDeleteIntentFilter);
+        IntentFilter categoryEditIntentFilter = new IntentFilter();
+        categoryEditIntentFilter.addAction(INTENT_ACTION_CATEGORY_EDIT);
+        registerReceiver(currentEditCategoryBroadcastReceiver, categoryEditIntentFilter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
+        // Broadcast Receiver Step 3b: Unregister all broadcast receivers
         unregisterReceiver(currentDeleteCategoryBroadcastReceiver);
+        unregisterReceiver(currentEditCategoryBroadcastReceiver);
+    }
+
+    public void updateCategory(int categoryId, Category updatedCategory) {
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        if (dbHelper.updateCategory(categoryId, updatedCategory) > 0) {
+            rebindRecyclerView();
+            Toast.makeText(this,"Update was successful", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this,"Update was not successful", Toast.LENGTH_SHORT).show();
+        }
     }
 }

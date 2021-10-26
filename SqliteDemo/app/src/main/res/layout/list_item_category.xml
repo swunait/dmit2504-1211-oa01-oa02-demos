@@ -28,4 +28,11 @@
             android:contentDescription="Delete Category"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
+        <ImageButton
+            android:id="@+id/list_item_category_edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Edit Category"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
 </LinearLayout>

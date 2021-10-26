@@ -62,6 +62,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         public TextView categoryIdTextView;
         public TextView categoryNameTextView;
         public ImageButton deleteButton;
+        public ImageButton editButton;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +70,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             categoryIdTextView = itemView.findViewById(R.id.list_item_category_id_textview);
             categoryNameTextView = itemView.findViewById(R.id.list_item_category_categoyrname_textview);
             deleteButton = itemView.findViewById(R.id.list_item_category_delete_button);
+            editButton = itemView.findViewById(R.id.list_item_category_edit_button);
 
             deleteButton.setOnClickListener(view -> {
                 int position = getAdapterPosition();
@@ -80,6 +82,15 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                 deleteCategoryIntent.putExtra(MainActivity.EXTRA_CATEGORY_CATEGORYID, currentCategory.getCategoryId());
                 itemView.getContext().sendBroadcast(deleteCategoryIntent);
 
+            });
+
+            editButton.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                Category currentCategory = categories.get(position);
+                Intent editCategoryIntent = new Intent();
+                editCategoryIntent.setAction(MainActivity.INTENT_ACTION_CATEGORY_EDIT);
+                editCategoryIntent.putExtra(MainActivity.EXTRA_CATEGORY_CATEGORYID, currentCategory.getCategoryId());
+                itemView.getContext().sendBroadcast(editCategoryIntent);
             });
 
         }
