@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         rebindRecyclerView();
+
+        binding.activityMainFab.setOnClickListener(view1 -> {
+            DialogCategoryAdd addDialog = new DialogCategoryAdd(this);
+            addDialog.show(getSupportFragmentManager(),"DialogCategoryAdd");
+        });
+
     }
 
     private void rebindRecyclerView() {
@@ -41,22 +47,21 @@ public class MainActivity extends AppCompatActivity {
         binding.activityMainCategoriesRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void onSaveButtonClick(View view) {
-        String categoryName = binding.activityMainCategorynameEdittext.getText().toString();
-        if (categoryName.isEmpty()) {
-            Toast.makeText(this, "Category Name is required.", Toast.LENGTH_SHORT).show();
-        } else {
-            Category newCategory = new Category();
-            newCategory.setCategoryName(categoryName);
-            DatabaseHelper dbHelper = new DatabaseHelper(this);
-            long categoryId = dbHelper.addCategory(newCategory);
-            String message = String.format("Save successful with id %s", categoryId);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            binding.activityMainCategorynameEdittext.setText("");
-            rebindRecyclerView();
-        }
-
-    }
+//    public void onSaveButtonClick(View view) {
+//        String categoryName = binding.activityMainCategorynameEdittext.getText().toString();
+//        if (categoryName.isEmpty()) {
+//            Toast.makeText(this, "Category Name is required.", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Category newCategory = new Category();
+//            newCategory.setCategoryName(categoryName);
+//            DatabaseHelper dbHelper = new DatabaseHelper(this);
+//            long categoryId = dbHelper.addCategory(newCategory);
+//            String message = String.format("Save successful with id %s", categoryId);
+//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//            binding.activityMainCategorynameEdittext.setText("");
+//            rebindRecyclerView();
+//        }
+//    }
 
     public static final String INTENT_ACTION_CATEGORY_DELETE = "ca.nait.dmit.dmit2504.CATEGORY_DELETE";
     public static final String INTENT_ACTION_CATEGORY_EDIT = "ca.nait.dmit.dmit2504.CATEGORY_EDIT";
@@ -143,6 +148,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"Update was successful", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this,"Update was not successful", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addCategory(Category newCategory) {
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        if (dbHelper.addCategory(newCategory) > 0) {
+            rebindRecyclerView();
+            Toast.makeText(this,"Add was successful", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this,"Add not was not successful", Toast.LENGTH_SHORT).show();
         }
     }
 }

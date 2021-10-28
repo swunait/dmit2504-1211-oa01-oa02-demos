@@ -12,7 +12,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "SqliteDemo.db";
 
     private static final String SQL_CREATE_CATEGORY_ENTRIES =
@@ -21,8 +21,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + DatabaseContract.CategoryEntry.COLUMN_NAME_CATEGORYNAME + " TEXT"
                 + ")";
 
+    private static final String SQL_CREATE_PRODUCT_ENTRIES =
+            "CREATE TABLE " + DatabaseContract.ProductEntry.TABLE_NAME + "("
+                + DatabaseContract.ProductEntry._ID + " INTEGER PRIMARY KEY, "
+                + DatabaseContract.ProductEntry.COLUMN_NAME_PRODUCTNAME + " TEXT, "
+                + DatabaseContract.ProductEntry.COLUMN_NAME_UNITPRICE + " REAL,"
+                + DatabaseContract.ProductEntry.COLUMN_NAME_CATEGORYID + " INTEGER, "
+                + "FOREIGN KEY (" + DatabaseContract.ProductEntry.COLUMN_NAME_CATEGORYID + ")"
+                    + " REFERENCES " + DatabaseContract.CategoryEntry.TABLE_NAME + "(" + DatabaseContract.CategoryEntry._ID + ")"
+            + ")";
+
     private static final String SQL_DELETE_CATEGORY_ENTRIES =
             "DROP TABLE IF EXISTS " + DatabaseContract.CategoryEntry.TABLE_NAME;
+    private static final String SQL_DELETE_PRODUCT_ENTRIES =
+            "DROP TABLE IF EXISTS " + DatabaseContract.ProductEntry.TABLE_NAME;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,10 +43,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_CATEGORY_ENTRIES);
+        sqLiteDatabase.execSQL(SQL_CREATE_PRODUCT_ENTRIES);
+
+        final String insertCat1 = "INSERT INTO " + DatabaseContract.CategoryEntry.TABLE_NAME
+                + "(" + DatabaseContract.CategoryEntry.COLUMN_NAME_CATEGORYNAME + ")"
+                + "VALUES('Category 1')";
+        final String insertCat2 = "INSERT INTO " + DatabaseContract.CategoryEntry.TABLE_NAME
+                + "(" + DatabaseContract.CategoryEntry.COLUMN_NAME_CATEGORYNAME + ")"
+                + "VALUES('Category 2')";
+        final String insertCat3 = "INSERT INTO " + DatabaseContract.CategoryEntry.TABLE_NAME
+                + "(" + DatabaseContract.CategoryEntry.COLUMN_NAME_CATEGORYNAME + ")"
+                + "VALUES('Category 3')";
+        final String insertCat4 = "INSERT INTO category_table(category_name) VALUES('Category 4')";
+        final String insertCat5 = "INSERT INTO category_table(category_name) VALUES('Category 5')";
+        sqLiteDatabase.execSQL(insertCat1);
+        sqLiteDatabase.execSQL(insertCat2);
+        sqLiteDatabase.execSQL(insertCat3);
+        sqLiteDatabase.execSQL(insertCat4);
+        sqLiteDatabase.execSQL(insertCat5);
+
+        final String cat1Prod1 = "INSERT INTO product_table(product_name, unit_price, category_id) VALUES('Cat 1 Product 1', 1.23, 1)";
+        final String cat1Prod2 = "INSERT INTO product_table(product_name, unit_price, category_id) VALUES('Cat 1 Product 2', 4.56, 1)";
+        final String cat1Prod3 = "INSERT INTO product_table(product_name, unit_price, category_id) VALUES('Cat 1 Product 3', 7.89, 1)";
+        final String cat3Prod1 = "INSERT INTO product_table(product_name, unit_price, category_id) VALUES('Cat 3 Product 1', 9.87, 3)";
+        final String cat3Prod2 = "INSERT INTO product_table(product_name, unit_price, category_id) VALUES('Cat 3 Product 2', 6.54, 3)";
+        final String cat3Prod3 = "INSERT INTO product_table(product_name, unit_price, category_id) VALUES('Cat 3 Product 3', 3.21, 3)";
+        sqLiteDatabase.execSQL(cat1Prod1);
+        sqLiteDatabase.execSQL(cat1Prod2);
+        sqLiteDatabase.execSQL(cat1Prod3);
+        sqLiteDatabase.execSQL(cat3Prod1);
+        sqLiteDatabase.execSQL(cat3Prod2);
+        sqLiteDatabase.execSQL(cat3Prod3);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL(SQL_DELETE_PRODUCT_ENTRIES);
         sqLiteDatabase.execSQL(SQL_DELETE_CATEGORY_ENTRIES);
         onCreate(sqLiteDatabase);
     }
@@ -60,6 +104,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.query(
                 DatabaseContract.CategoryEntry.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                groupBy,
+                having,
+                orderBy
+        );
+    }
+
+    public Cursor getProductsByCategoryId(int categoryId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {
+                DatabaseContract.ProductEntry._ID,
+                DatabaseContract.ProductEntry.COLUMN_NAME_PRODUCTNAME,
+                DatabaseContract.ProductEntry.COLUMN_NAME_UNITPRICE,
+                DatabaseContract.ProductEntry.COLUMN_NAME_CATEGORYID
+        };
+        String selection = DatabaseContract.ProductEntry.COLUMN_NAME_CATEGORYID + " = ?";
+        String[] selectionArgs = {String.valueOf(categoryId)};
+        String groupBy = null;
+        String having = null;
+        String orderBy = DatabaseContract.ProductEntry.COLUMN_NAME_PRODUCTNAME + " ASC";
+
+        return db.query(
+                DatabaseContract.ProductEntry.TABLE_NAME,
                 columns,
                 selection,
                 selectionArgs,
