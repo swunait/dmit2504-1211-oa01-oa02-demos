@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SqliteDemo">
         <activity
-            android:name=".ProductActivity"
-            android:exported="true">
+            android:name=".SpinnerDemoActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,10 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ProductActivity"
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

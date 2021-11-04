@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SpinnerDemoActivity">
+
+    <Spinner
+        android:id="@+id/activity_spinner_demo_category1_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="Select Category"
+        android:minHeight="32dp" />
+
+    <Spinner
+        android:id="@+id/activity_spinner_demo_category2_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:contentDescription="Select Category"/>
+
+    <Button
+        android:id="@+id/activity_spinner_demo_showcategory_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Category" />
+
+</LinearLayout>
