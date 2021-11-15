@@ -21,18 +21,27 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:text="category name" />
 
-        <ImageButton
-            android:id="@+id/list_item_category_delete_button"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="Delete Category"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/list_item_category_edit_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="Edit Category"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
+                <ImageButton
+                    android:id="@+id/list_item_category_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="Delete Category"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+
+                <ImageButton
+                    android:id="@+id/list_item_category_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="Edit Category"
+                    app:srcCompat="@android:drawable/ic_menu_edit" />
+        </LinearLayout>
 
 </LinearLayout>

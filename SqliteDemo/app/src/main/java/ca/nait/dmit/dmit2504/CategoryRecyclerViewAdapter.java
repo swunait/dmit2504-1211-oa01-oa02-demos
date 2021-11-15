@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 // Step 2: extends RecyclerView.Adapter super class
@@ -71,7 +72,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             categoryNameTextView = itemView.findViewById(R.id.list_item_category_categoyrname_textview);
             deleteButton = itemView.findViewById(R.id.list_item_category_delete_button);
             editButton = itemView.findViewById(R.id.list_item_category_edit_button);
-
+            LocalDateTime.now().toString();
             deleteButton.setOnClickListener(view -> {
                 int position = getAdapterPosition();
 //                Toast.makeText(itemView.getContext(),"Delete catgeory at index " + position, Toast.LENGTH_SHORT).show();

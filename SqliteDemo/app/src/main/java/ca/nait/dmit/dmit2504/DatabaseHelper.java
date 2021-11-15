@@ -175,6 +175,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return currentCategory;
     }
 
+    public List<Product> getProductsListByCategoryId(int categoryId) {
+        Cursor queryResultCursor = getProductsByCategoryId(categoryId);
+        List<Product> products = new ArrayList<>();
+        while (queryResultCursor.moveToNext()) {
+            Product currentProduct = mapCursorToProduct(queryResultCursor);
+            products.add(currentProduct);
+        }
+        return products;
+    }
+
+    private Product mapCursorToProduct(Cursor queryResultCursor) {
+        Product currentProduct = new Product();
+
+        int columnIndexProductId = queryResultCursor.getColumnIndexOrThrow(DatabaseContract.ProductEntry._ID);
+        currentProduct.setProductId(queryResultCursor.getInt(columnIndexProductId));
+        int columnIndexProductName = queryResultCursor.getColumnIndexOrThrow(DatabaseContract.ProductEntry.COLUMN_NAME_PRODUCTNAME);
+        currentProduct.setProductName(queryResultCursor.getString(columnIndexProductName));
+        int columnIndexUnitPrice = queryResultCursor.getColumnIndexOrThrow(DatabaseContract.ProductEntry.COLUMN_NAME_UNITPRICE);
+        currentProduct.setUnitPrice(queryResultCursor.getDouble(columnIndexUnitPrice));
+        int columnIndexCategoryId = queryResultCursor.getColumnIndexOrThrow(DatabaseContract.ProductEntry.COLUMN_NAME_CATEGORYID);
+        currentProduct.setCategoryId(queryResultCursor.getInt(columnIndexCategoryId));
+
+        return currentProduct;
+    }
+
     public List<Category> getCategoriesList() {
         Cursor queryResultCursor = getCategoriesCursor();
         List<Category> categories = new ArrayList<>();
