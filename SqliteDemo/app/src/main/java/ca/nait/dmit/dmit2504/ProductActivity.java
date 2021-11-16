@@ -44,10 +44,14 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//        int categoryId = i == 0 ? 1 : 3;
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        Category selectedCategory = dbHelper.getCategoriesList().get(i);
+//        Category selectedCategory = dbHelper.getCategoriesList().get(i);
+//        int categoryId = selectedCategory.getCategoryId();
+
+        int position = binding.activityProductCategorySpinner.getSelectedItemPosition();
+        Category selectedCategory = dbHelper.getCategoriesList().get(position);
         int categoryId = selectedCategory.getCategoryId();
+
 
 //        Cursor categoryProductQueryResultCursor = dbHelper.getProductsByCategoryId(categoryId);
 //        String[] fromColumnNames = {DatabaseContract.ProductEntry.COLUMN_NAME_PRODUCTNAME};
