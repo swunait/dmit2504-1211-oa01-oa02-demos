@@ -1,10 +1,13 @@
 package ca.nait.dmit.dmit2504.chattergen2;
 
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +59,12 @@ public class ChatterListViewAdapter extends BaseAdapter {
         loginNameTextView.setText(currentChatter.getLoginName());
         messageTextView.setText(currentChatter.getMessage());
         dateTextView.setText(currentChatter.getDate());
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(listItemView.getContext());
+        int contentAreaFontSize = Integer.parseInt(settings.getString("preference_fontsize_contentarea","12"));
+        loginNameTextView.setTextSize(contentAreaFontSize);
+        messageTextView.setTextSize(contentAreaFontSize);
+        dateTextView.setTextSize(contentAreaFontSize);
 
         return listItemView;
     }

@@ -2,12 +2,17 @@ package ca.nait.dmit.dmit2504.chattergen2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -85,5 +90,45 @@ public class MainActivity extends AppCompatActivity {
 //            String message = String.format("Error sending with code %d", responseCode);
 //            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 //        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu to add items to the action bar if present
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        // Handle action bar items clicks here.
+        switch (item.getItemId()) {
+            case R.id.menu_activity_main_viewchatters: {
+                // Close the current activity instead of starting a new activity
+                finish();
+
+                return true;
+            }
+            case R.id.menu_activity_main_settings: {
+                Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
+                startActivity(startSettingsActivityIntent);
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        int titleFontSize = Integer.parseInt(settings.getString("preference_fontsize_title","28"));
+        int contentAreaFontSize = Integer.parseInt(settings.getString("preference_fontsize_contentarea","12"));
+        binding.activityMainTitleTextview.setTextSize(titleFontSize);
+        binding.activityMainMessageEdittext.setTextSize(contentAreaFontSize);
+        binding.activityMainSendButton.setTextSize(contentAreaFontSize);
     }
 }

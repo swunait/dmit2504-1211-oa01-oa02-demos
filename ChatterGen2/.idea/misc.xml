@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/AndroidStudioProjects/DMIT2504/Fall2021Term/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/layout/activity_main.xml" value="0.23072916666666668" />
+        <entry key="..\:/Android/AndroidStudioProjects/DMIT2504/Fall2021Term/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/layout/activity_view_remote_chatter_list_view.xml" value="0.3596014492753623" />
+        <entry key="..\:/Android/AndroidStudioProjects/DMIT2504/Fall2021Term/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/layout/settings_activity.xml" value="0.3596014492753623" />
+        <entry key="..\:/Android/AndroidStudioProjects/DMIT2504/Fall2021Term/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/menu/menu_activity_main.xml" value="0.4041666666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/DMIT2504/Fall2021Term/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/menu/menu_activity_viewchatters.xml" value="0.4041666666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/DMIT2504/Fall2021Term/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/xml/root_preferences.xml" value="0.1686746987951807" />
         <entry key="..\:/Android/AndroidStudioProjects/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/layout/activity_main.xml" value="0.39010416666666664" />
         <entry key="..\:/Android/AndroidStudioProjects/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/layout/activity_view_remote_chatter_list_view.xml" value="0.4041666666666667" />
         <entry key="..\:/Android/AndroidStudioProjects/dmit2504-1211-oa01-oa02-demos/ChatterGen2/app/src/main/res/layout/chatter_listview_item.xml" value="0.4041666666666667" />

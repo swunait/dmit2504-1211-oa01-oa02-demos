@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_activity_main_viewchatters"
+        android:title="View Chatters"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_activity_main_settings"
+        android:title="Settings"
+        app:showAsAction="never" />
+</menu>

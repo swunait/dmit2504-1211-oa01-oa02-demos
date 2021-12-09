@@ -20,16 +20,19 @@
 
     <EditText
         android:id="@+id/activity_main_message_edittext"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="enter a message to send"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_title_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_main_title_textview"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/activity_main_send_button"
